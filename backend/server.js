@@ -55,7 +55,7 @@ app.use("/api/auth", authRoutes);
 app.listen(PORT, () => {
 
     connectToMongoDB();
-    const uri = ('mongodb+srv://asunny583:zkUm3FPe6xRJT47h@cluster0.eo4tj.mongodb.net/sun-db?retryWrites=true&w=majority&appName=Cluster0');
+    const uri = ('mongodb+srv://admin:admin@cluster0.8cre9er.mongodb.net/holasingh');
     console.log("URI:", uri);
     console.log(`Server running on port ${PORT}`);
 }).on('error', (err) => {

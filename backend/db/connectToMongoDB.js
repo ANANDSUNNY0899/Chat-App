@@ -1,19 +1,19 @@
- import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
- const connectToMongoDB = async () => {
+// Make sure this connection function is called
+const connectToMongoDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://asunny583:zkUm3FPe6xRJT47h@cluster0.eo4tj.mongodb.net/sun-db?retryWrites=true&w=majority&appName=Cluster0');
-        console.log("Connected to MongoDB");
+        await mongoose.connect('mongodb+srv://admin:admin@cluster0.8cre9er.mongodb.net/holasingh', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            connectTimeoutMS: 10000, // Timeout in case of connection failure
+        });
+        console.log("Successfully connected to MongoDB");
     } catch (error) {
-        console.log("Error connecting to MongoDb", error.message);
+        console.log("Error connecting to MongoDB:", error.message);
+        process.exit(1); // Exit the process if the connection fails
     }
-    mongoose.connect('mongodb+srv://asunny583:zkUm3FPe6xRJT47h@cluster0.eo4tj.mongodb.net/sun-db?retryWrites=true&w=majority&appName=Cluster0', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        connectTimeoutMS: 10000, // 10 seconds timeout
-    });
-    
- }
+};
 
 
 export default connectToMongoDB;

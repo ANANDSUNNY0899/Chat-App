@@ -107,10 +107,11 @@ export const signup = async (req, res) => {
         console.log("Saving new user to database...");
         await newUser.save();
         console.log("New user saved successfully");
+        console.log("Signup Finished");
 
         // Generate JWT token
-        generateToken(newUser._id, res);
-        console.log("JWT token generated");
+        //generateToken(newUser._id, res);
+        // console.log("JWT token generated");
 
         // Respond with user details
         res.status(201).json({
@@ -118,11 +119,15 @@ export const signup = async (req, res) => {
             fullName: newUser.fullName,
             username: newUser.username,
             profilePic: newUser.profilePic,
+
+            
         });
+
+        
 
     } catch (error) {
         console.error("Error in signup controller:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: "Internal Server err" });
     }
 };
 

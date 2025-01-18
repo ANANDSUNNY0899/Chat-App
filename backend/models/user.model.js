@@ -60,7 +60,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "", // Sets a default value for profile pictures
     },
-});
+    
+    //creatredAt, UpdatedAt
+},{ timestamps: true});
 
 const User = mongoose.model("User", userSchema);
 

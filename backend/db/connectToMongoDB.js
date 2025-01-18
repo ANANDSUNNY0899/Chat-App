@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 // Make sure this connection function is called
 const connectToMongoDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://admin:admin@cluster0.8cre9er.mongodb.net/holasingh', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            connectTimeoutMS: 10000, // Timeout in case of connection failure
+        await mongoose.connect('mongodb+srv://asunny583:Hekoa1844jVnvjOQ@cluster0.z7d8b.mongodb.net/chat-app-yt?retryWrites=true&w=majority&appName=Cluster0', {
+            //seNewUrlParser: true,
+            // useUnifiedTopology: true,
+            //connectTimeoutMS: 10000, // Timeout in case of connection failure
         });
         console.log("Successfully connected to MongoDB");
     } catch (error) {

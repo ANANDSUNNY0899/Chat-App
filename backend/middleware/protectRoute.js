@@ -1,85 +1,74 @@
-// import jwt from'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 // import User from '../models/user.model.js';
+// import dotenv from 'dotenv';
 
+// dotenv.config();
 
-// const secret = ('NJYOCyMrTCHctSr+mk+o7chG2GFKZos3mkmdRi0ht30=');
-//  const protectRoute = async (req, res, next) => {
+// const protectRoute = async (req, res, next) => {
 //     try {
-//         const token = req.cookies.jwt;
-//         if(!token) {
-//             return res.status(401).json({error: "Unauthorized - No Token Provided "});
+//         const token = req.cookies?.jwt;
+
+//         if (!token) {
+//             return res.status(401).json({ error: "Unauthorized - No Token Provided" });
 //         }
 
-//         const decoded = jwt.verify(token, secret);
+//         let decoded;
+//         try {
+//             decoded = jwt.verify(token, process.env.JWT_SECRET);  // Use same secret as generateToken
+//         } catch (err) {
+//             if (err.name === "TokenExpiredError") {
+//                 return res.status(401).json({ error: "Unauthorized - Token Expired" });
+//             }
+//             return res.status(401).json({ error: "Unauthorized - Invalid Token" });
+//         }
 
-// if(!decoded) {
-//     return res.status(401).json({ error: "Unautorized - Invalid Token"});
-// }
+//         const user = await User.findById(decoded.userId).select("-password");
+//         if (!user) {
+//             return res.status(404).json({ error: "User Not Found" });
+//         }
 
-// const user = await User.findById(decoded.userId).select("-password");
-
-// if(!user) {
-//     return res.status(404).json({ error: "user not found"});
-// }
-
-// req.user = decoded;
-
-// next();
-
-        
+//         req.user = user;
+//         next();
 //     } catch (error) {
-//         console.log("Error in protectRoute middlware: ", error.message)
-//         res.status(500).json({error: "Internal server error "});
+//         console.error("Error in protectRoute middleware:", error.message);
+//         res.status(500).json({ error: "Internal Server Error" });
 //     }
-//  }
+// };
 
 // export default protectRoute;
 
 
 
-
-
-
-
-import jwt from 'jsonwebtoken';
-import User from '../models/user.model.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const secret = ('NJYOCyMrTCHctSr+mk+o7chG2GFKZos3mkmdRi0ht30=');
+import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
 const protectRoute = async (req, res, next) => {
-    try {
-        const token = req.cookies?.jwt;
+	try {
+		const token = req.cookies.jwt;
 
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized - No Token Provided" });
-        }
+		if (!token) {
+			return res.status(401).json({ error: "Unauthorized - No Token Provided" });
+		}
 
-        let decoded;
-        try {
-            decoded = jwt.verify(token, secret);
-        } catch (err) {
-            if (err.name === "TokenExpiredError") {
-                return res.status(401).json({ error: "Unauthorized - Token Expired" });
-            }
-            return res.status(401).json({ error: "Unauthorized - Invalid Token" });
-        }
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        const user = await User.findById(decoded.userId).select("-password");
-        if (!user) {
-            return res.status(404).json({ error: "User Not Found" });
-        }
+		if (!decoded) {
+			return res.status(401).json({ error: "Unauthorized - Invalid Token" });
+		}
 
-        req.user = user;
-        next();
-    } catch (error) {
-        console.error("Error in protectRoute middleware:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
+		const user = await User.findById(decoded.userId).select("-password");
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		req.user = user;
+
+		next();
+	} catch (error) {
+		console.log("Error in protectRoute middleware: ", error.message);
+		res.status(500).json({ error: "Internal server error" });
+	}
 };
 
 export default protectRoute;
-
-

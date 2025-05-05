@@ -60,7 +60,6 @@
 
 import bcrypt from "bcryptjs";
 import User from '../models/user.model.js';
-// import generateTokenandSetCookie from "../utils/generateToken.js";
 import generateToken from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
@@ -110,8 +109,8 @@ export const signup = async (req, res) => {
         console.log("Signup Finished");
 
         // Generate JWT token
-        //generateToken(newUser._id, res);
-        // console.log("JWT token generated");
+        generateToken(newUser._id, res);
+        console.log("JWT token generated");
 
         // Respond with user details
         res.status(201).json({
